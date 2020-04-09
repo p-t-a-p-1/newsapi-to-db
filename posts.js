@@ -71,14 +71,18 @@ function deletePosts() {
    * Commentsテーブルの関連する全てのコメント削除→Postsテーブルの該当記事削除
    */
   Posts.findAll({
-    where: {
-      updatedAt: {
-        $gte: moment().subtract(100, 'days').toDate(),
-      },
-    },
+    where: Posts.sequelize.where(
+      Posts.sequelize.fn(
+        'DATE_FORMAT',
+        Posts.sequelize.col('createdAt'),
+        '%Y%m'
+      ),
+      moment().format('YYYYMM')
+    ),
+    limit: 1,
   })
     .then((post) => {
-      console.log(post)
+      console.info(post)
     })
     .then(() => {
       // DBとの接続終了
