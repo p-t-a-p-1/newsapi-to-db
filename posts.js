@@ -1,7 +1,7 @@
 /**
  * 記事の取得 & 削除関数のモジュール
  */
-
+const moment = require('moment')
 // NEWSAPIの利用
 const NewsAPI = require('newsapi')
 const NEWS_API_KEY = process.env.NEWS_API_KEY
@@ -12,6 +12,8 @@ const db = require('./models/index')
 const Categories = db.Categories
 // Postsテーブル
 const Posts = db.Posts
+// Commentsテーブル
+const Comments = db.Comments
 
 /**
  * NEWSAPIを用いて、カテゴリごとに記事の取得を行いDBに保存
@@ -68,8 +70,37 @@ function deletePosts() {
    * 対象記事のコメント数取得→10未満かどうか
    * Commentsテーブルの関連する全てのコメント削除→Postsテーブルの該当記事削除
    */
+  Posts.findAll({
+    where: {
+      updatedAt: {
+        $gte: moment().subtract(100, 'days').toDate(),
+      },
+    },
+  })
+    .then((post) => {
+      console.log(post)
+    })
+    .then(() => {
+      // DBとの接続終了
+      db.sequelize.close()
+    })
+    .catch((error) => {
+      console.log('ERROR処理')
+      console.error(error)
+    })
+  // Comments.findAll({
+  //   limit: 3,
+  // })
+  //   .then((comment) => {
+  //     console.log(comment.postId)
+  //   })
+  //   .catch((error) => {
+  //     console.log('ERROR処理')
+  //     console.error(error)
+  //   })
 }
 
 module.exports = {
   addPosts,
+  deletePosts,
 }

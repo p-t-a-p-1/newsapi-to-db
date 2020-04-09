@@ -26,4 +26,9 @@ const postfunc = require('./posts')
 
 const categorySlugArr = ['business']
 
-postfunc.addPosts(categorySlugArr)
+/**
+ * 上記のカテゴリごとの記事を取得しDBに登録
+ */
+// postfunc.addPosts(categorySlugArr)
+
+postfunc.deletePosts()
