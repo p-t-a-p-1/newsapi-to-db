@@ -24,11 +24,11 @@ const postfunc = require('./posts')
 //   'technology',
 // ]
 
-const categorySlugArr = ['business']
+const categorySlugArr = ['general']
 
 /**
  * 上記のカテゴリごとの記事を取得しDBに登録
  */
-// postfunc.addPosts(categorySlugArr)
+postfunc.addPosts(categorySlugArr)
 
-postfunc.deletePosts()
+// postfunc.deletePosts()

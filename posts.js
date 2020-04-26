@@ -34,10 +34,11 @@ function addPosts(categorySlugArr) {
           .topHeadlines({
             category: category.slug,
             country: 'jp',
-            pageSize: '1',
+            pageSize: '5',
           })
           .then((news) => {
             news['articles'].forEach((item) => {
+              console.log(item)
               // ニュース単体をPostsテーブルにレコード追加
               Posts.create({
                 categoryId: category.id,
